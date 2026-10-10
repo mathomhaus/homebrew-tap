@@ -16,27 +16,27 @@ cask "guild" do
     end
   end
 
-  version "0.4.0"
+  version "0.4.1"
 
   on_macos do
     on_intel do
       url "https://github.com/mathomhaus/guild/releases/download/v#{version}/guild_#{version}_darwin_amd64.tar.gz"
-      sha256 "a7fc15a19948645656d3f75ea7e362c3e77550444f73ed449672c07125b72475"
+      sha256 "b7620d8d34cfaab114c351466f00c85a234091f844918ef6b8bab299db334c50"
     end
     on_arm do
       url "https://github.com/mathomhaus/guild/releases/download/v#{version}/guild_#{version}_darwin_arm64.tar.gz"
-      sha256 "9d4abb5543cfeaadfd8143886decbb9f7805dfe4b65256d04ad6235d3a6543b0"
+      sha256 "12df1dd738a622d5fb67d71f8ba6a20248a0298871b02ab257689c0bb4d05eac"
     end
   end
 
   on_linux do
     on_intel do
       url "https://github.com/mathomhaus/guild/releases/download/v#{version}/guild_#{version}_linux_amd64.tar.gz"
-      sha256 "b1fbd3d1575e6744456cd96cfc747dcbdc08615749c85fc5836ce7ff8502f1d6"
+      sha256 "1c503c10318eed0221c6917c4410fd56de2f096c533377b92d132ed256a8dfd4"
     end
     on_arm do
       url "https://github.com/mathomhaus/guild/releases/download/v#{version}/guild_#{version}_linux_arm64.tar.gz"
-      sha256 "00860ff082cf875d331588723578cb3f086e7b0ffaf9f1e1947f0c39aa0a3b5e"
+      sha256 "ddc09ef7c53a02e25d0b93cfa269ae82d465675583d021c376a8620da603be48"
     end
   end
 

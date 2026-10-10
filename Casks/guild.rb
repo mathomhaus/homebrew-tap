@@ -3,33 +3,28 @@ cask "guild" do
   version "0.3.2"
 
   on_macos do
-    on_intel do
-      sha256 "f75fc7824575c1093b3911b307360541cec2e1cd7a8f6d8f8b3237bb8ee2f42c"
-      url "https://github.com/mathomhaus/guild/releases/download/v#{version}/guild_#{version}_darwin_amd64.tar.gz",
-        verified: "github.com/mathomhaus/guild"
-    end
     on_arm do
       sha256 "1ce940e38e6e460ce2a79258c7915ac43fcedeb2fcb117ef494b46cf3bdecc33"
-      url "https://github.com/mathomhaus/guild/releases/download/v#{version}/guild_#{version}_darwin_arm64.tar.gz",
-        verified: "github.com/mathomhaus/guild"
+      url "https://github.com/mathomhaus/guild/releases/download/v#{version}/guild_#{version}_darwin_arm64.tar.gz"
+    end
+    on_intel do
+      sha256 "f75fc7824575c1093b3911b307360541cec2e1cd7a8f6d8f8b3237bb8ee2f42c"
+      url "https://github.com/mathomhaus/guild/releases/download/v#{version}/guild_#{version}_darwin_amd64.tar.gz"
     end
   end
-
   on_linux do
-    on_intel do
-      sha256 "34e699ebc38867ed17b98954b25901d5cc819aee74e314a9b0163e9bdd02efb4"
-      url "https://github.com/mathomhaus/guild/releases/download/v#{version}/guild_#{version}_linux_amd64.tar.gz",
-        verified: "github.com/mathomhaus/guild"
-    end
     on_arm do
       sha256 "12b45d987df94aca078d7f5171f92451ed4b31ba62cc4eaaad08617d1fca14c0"
-      url "https://github.com/mathomhaus/guild/releases/download/v#{version}/guild_#{version}_linux_arm64.tar.gz",
-        verified: "github.com/mathomhaus/guild"
+      url "https://github.com/mathomhaus/guild/releases/download/v#{version}/guild_#{version}_linux_arm64.tar.gz"
+    end
+    on_intel do
+      sha256 "34e699ebc38867ed17b98954b25901d5cc819aee74e314a9b0163e9bdd02efb4"
+      url "https://github.com/mathomhaus/guild/releases/download/v#{version}/guild_#{version}_linux_amd64.tar.gz"
     end
   end
 
   name "guild"
-  desc "persistent cognition for AI agents — task + knowledge lifecycle"
+  desc "Persistent cognition for AI agents — task + knowledge lifecycle"
   homepage "https://github.com/mathomhaus/guild"
 
   livecheck do
@@ -38,12 +33,21 @@ cask "guild" do
 
   binary "guild"
 
-  postflight do
-    if OS.mac?
-      system_command "/usr/bin/xattr", args: ["-dr", "com.apple.quarantine", "#{staged_path}/guild"]
+  # Older Homebrew answers respond_to? through a permissive method_missing.
+  if self.class.method_defined?(:postflight_steps)
+    postflight_steps do
+      on_macos do
+        run "/usr/bin/xattr", args: ["-dr", "com.apple.quarantine", "{{staged_path}}/guild"]
+      end
+    end
+  else
+    # Bind the older DSL explicitly only on versions that need it.
+    method(:postflight).call do
+      if OS.mac?
+        system_command "/usr/bin/xattr", args: ["-dr", "com.apple.quarantine", "#{staged_path}/guild"]
+      end
     end
   end
 
   # No zap stanza required
-
 end
